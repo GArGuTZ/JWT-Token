@@ -59,23 +59,21 @@ namespace TokenApp.Controllers
         [HttpGet("/getHistory/{count}")]
         public IActionResult GetHistory(int count)
         {
-            using (Models.ApplicationContext db = new Models.ApplicationContext())
+            Models.ApplicationContext db = new Models.ApplicationContext();
+            Console.WriteLine(count);
+            var selectedMessages = (from m in db.Messages orderby m.Id descending select m).Take(count);
+            /*
+            foreach (var msg in db.Messages.ToList())
             {
-                Console.WriteLine(count);
-                var selectedMessages = (from m in db.Messages orderby m.Id descending select m).Take(count);
-                //var selectedMessages = from m in db.Messages select m;
-                //foreach (var msg in selectedMessages.ToList())
-                foreach (var msg in db.Messages.ToList())
-                {
-                    Console.WriteLine("inside get loop");
-                    Console.WriteLine(msg.Id);
-                    Console.WriteLine(msg.Content);
-                    Console.WriteLine(msg.UserId);
-                }
-                Console.WriteLine("outside get loop");
-                return Json(selectedMessages);
+                Console.WriteLine("inside get loop");
+                Console.WriteLine(msg.Id);
+                Console.WriteLine(msg.Content);
+                Console.WriteLine(msg.UserId);
             }
-            //return Ok("Get метод");
+            Console.WriteLine("outside get loop");
+
+            //return Ok("Get метод");*/
+            return Json(selectedMessages);
         }
         [HttpPost("/writeMessage")]
         public IActionResult Write(string username, string message)
