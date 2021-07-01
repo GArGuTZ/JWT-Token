@@ -1,0 +1,140 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>JWT в ASP.NET Core Web API</title>
+</head>
+<body>
+    <div id="messageForm">
+        <h3>Отправка сообщения</h3>
+        <label>Введите имя</label><br />
+        <input type="text" id="userName" /> <br /><br />
+        <label>Введите сообщение</label><br />
+        <input type="text" id="inputMessage" /><br /><br />
+        <input type="submit" id="sendMessage" value="Отправить сообщение" />
+    </div>
+    <div id="serverResponse">
+
+    </div>
+
+    <script>
+        async function getTokenAsync()
+        {
+            const formData = new FormData();
+            formData.append("grant_type", "password");
+            formData.append("username", document.getElementById("userName").value);
+            formData.append("password", document.getElementById("inputMessage").value);
+
+            const response = await fetch("/token", {
+                method: "POST",
+                headers: { "Accept": "application/json" },
+                body: formData
+            });
+            const data = await response.json();
+
+            if (response.ok === true)
+            {
+                sessionStorage.setItem(document.getElementById("userName").value, "False");
+                sessionStorage.setItem("accessKey", data.access_token);
+
+                document.getElementById("serverResponse").innerText = data.access_token;
+            }
+            else
+            {
+                //console.log("Error: ", response.status, data.errorText);
+                document.getElementById("serverResponse").innerText = data.errorText;
+            }
+        };
+
+        async function getHistory(length) {
+            const token = sessionStorage.getItem("accessKey");
+            console.log(length);
+
+            const response = await fetch("/getHistory/" + length, {
+                method: "GET",
+                headers: {
+                    "Accept": "application/json",
+                    "Authorization": "Bearer " + token
+                }
+            });
+            if (response.ok === true) {
+
+                const data = await response.json();
+                console.log(data);
+            }
+            else
+            {
+                console.log("Status: ", response.status);
+                console.log(response);
+            }
+
+        };
+
+        async function addMessage()
+        {
+            const formData = new FormData();
+            formData.append("username", document.getElementById("userName").value);
+            formData.append("message", document.getElementById("inputMessage").value);
+
+            const response = await fetch("/writeMessage", {
+                method: "POST",
+                headers: { "Accept": "application/json" },
+                body: formData
+            });
+            const data = await response.json();
+
+            if (response.ok === true)
+            {
+                console.log(data);
+            }
+            else
+            {
+                console.log("Error: ", response.status, data.errorText);
+            }
+
+        };
+
+        document.getElementById("sendMessage").addEventListener("click", e => {
+            e.preventDefault();
+
+            var currentUser = document.getElementById("userName").value;
+            var currentInput = document.getElementById("inputMessage").value;
+            if (sessionStorage.getItem(currentUser) == "True" && (currentInput.substr(0, 7) == "history"))
+            {
+                var regExpObj = /\d+/;
+                var historyLength = currentInput.match(regExpObj);
+                //console.log(historyLength[0]);
+                getHistory(historyLength[0]);
+                console.log("here is history");
+            }
+            else if (sessionStorage.getItem(currentUser) && currentInput.substr(0, 4) == "auth")
+            {
+                var userToken = currentInput.substr(5);
+                //console.log(userToken);
+                console.log("here is auth");
+                if (userToken == sessionStorage.getItem("accessKey"))
+                {
+                    sessionStorage.setItem(currentUser, "True");
+                    console.log("User authorised");
+                }
+                else
+                {
+                    console.log("Wrong token");
+                }
+            }
+            else
+            {
+                if (sessionStorage.getItem(currentUser) == "True")
+                {
+                    console.log("Отправка сообщения");
+                    addMessage();
+                }
+                else
+                {
+                    getTokenAsync().then(function (value) { console.log(sessionStorage) });
+                }
+            }
+        });
+    </script>
+</body>
+</html>
