@@ -608,3 +608,145 @@ __pycache__/
 # tools/
 
 # End of https://www.toptal.com/developers/gitignore/api/aspnetcore
+
+# Tabs Studio
+*.tss
+
+# Telerik's JustMock configuration file
+*.jmconfig
+
+# BizTalk build output
+*.btp.cs
+*.btm.cs
+*.odx.cs
+*.xsd.cs
+
+# OpenCover UI analysis results
+OpenCover/
+
+# Azure Stream Analytics local run output
+ASALocalRun/
+
+# MSBuild Binary and Structured Log
+*.binlog
+
+# NVidia Nsight GPU debugger configuration file
+*.nvuser
+
+# MFractors (Xamarin productivity tool) working folder
+.mfractor/
+
+# Local History for Visual Studio
+.localhistory/
+
+# BeatPulse healthcheck temp database
+healthchecksdb
+
+# Backup folder for Package Reference Convert tool in Visual Studio 2017
+MigrationBackup/
+
+# Ionide (cross platform F# VS Code tools) working folder
+.ionide/
+
+
+# Prerequisites
+*.d
+
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+
+# Fortran module files
+*.mod
+*.smod
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+*.lib
+
+# Executables
+*.exe
+*.out
+*.app
+
+# VS Files
+ipch
+*.sdf
+*.opensdf
+*.sln
+*.trx
+*/TestResults
+*.vcxproj.filters
+*.vcxproj.user
+*.vcxproj
+*.idc
+BuildLog.htm
+mt.dep
+*.dll
+*.res
+*.manifest
+*.pdb
+*.idb
+*.pch
+dlldata.c
+*.vspscc
+*.obj
+*.tlb
+*_i.c
+*_p.c
+_*.idl
+_*.h
+*_i.h
+*/Release*
+*/release*
+*/Debug*
+*/debug*
+*.plg
+*.opt
+*.user
+*.ncb
+*.suo
+*.aps
+*.ilk
+.DS_Store
+.*.swp
+#*#
+.#*
+*~
+*.rej
+*.pyo
+*.pyc
+*.a
+*.so
+*.so.[0-9]*
+.libs
+*.al
+*.la
+*.lo
+*.o
+
+# CMake
+CMakeLists.txt.user
+CMakeCache.txt
+CMakeFiles
+CMakeScripts
+Testing
+Makefile
+cmake_install.cmake
+install_manifest.txt
+compile_commands.json
+CTestTestfile.cmake
+_deps
